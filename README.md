@@ -1,6 +1,6 @@
-# WordPress Plugin Boilerplate
+# WordPress Plugin Boilerplate with ACF
 
-A standardized, organized, object-oriented foundation for building high-quality WordPress Plugins.
+A standardized, organized, object-oriented foundation for building high-quality WordPress Plugins. 
 
 ## Contents
 
