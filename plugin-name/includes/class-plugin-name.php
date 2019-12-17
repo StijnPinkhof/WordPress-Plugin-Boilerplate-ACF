@@ -99,6 +99,40 @@ class Plugin_Name {
 	 */
 	private function load_dependencies() {
 
+    /**
+		 * Define path and URL to the ACF plugin.
+     * Include the ACF plugin.
+     * Customize the url setting to fix incorrect asset URLs.
+     * (Optional) Hide the ACF admin menu item.
+		 */
+    define( 'PLUGIN_NAME_ACF_PATH', plugin_dir_path( dirname( __FILE__ ) ) . '/includes/acf/' );
+    define( 'PLUGIN_NAME_ACF_URL', plugin_dir_url( dirname( __FILE__ ) ) . '/includes/acf/' );
+
+    include_once( PLUGIN_NAME_ACF_PATH . 'acf.php' );
+
+    add_filter('acf/settings/url', 'plugin_name_settings_url');
+    function plugin_name_settings_url( $url ) {
+        return PLUGIN_NAME_ACF_URL;
+    }
+    //add_filter('acf/settings/show_admin', 'plugin_name_settings_show_admin');
+    function plugin_name_settings_show_admin( $show_admin ) {
+        return false;
+    }
+
+    add_filter('acf/settings/save_json', 'plugin_name_json_save_point');
+    function plugin_name_json_save_point( $path ) {
+        $path = plugin_dir_path( dirname( __FILE__ ) ) . '/acf-json';
+        return $path;
+    }
+
+    add_filter('acf/settings/load_json', 'plugin_name_json_load_point');
+    function plugin_name_json_load_point( $paths ) {        
+        unset($paths[0]);
+        $paths[] = plugin_dir_path( dirname( __FILE__ ) ) . '/acf-json';
+        return $paths;
+    }
+
+
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
